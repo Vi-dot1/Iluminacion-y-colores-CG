@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iluminación y colores</title>
+    <link rel="stylesheet" href="index.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Lora:ital,wght@0,400;1,600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <nav class="main-nav">
+        <div class="nav-content">
+            <div class="blog-logo">GRAPHIC<span>LOG</span></div>
+            <div class="menu">
+                <span class="nav-tooltip" data-tooltip="Proximamente ... 🙏🙏🙏">
+                    <a href="#">Artículos</a>
+                </span>
+                <span class="nav-tooltip" data-tooltip="Proximamente ... 🙏🙏🙏">
+                    <a href="#">Glosario</a>
+                </span>
+                <span class="nav-tooltip" data-tooltip="Proximamente ... 🙏🙏🙏 ">
+                    <button class="subscribe-btn">Suscribirse</button>
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="blog-container">
+
+        <main class="post-feed">
+
+            <!-- Ficha 1: Iluminación en el mundo real y opengl -->
+            <article class="post-card" id="card-iluminacion-real">
+                <header class="post-header">
+                    <span class="category theory">Iluminación en el mundo real y en OpenGL</span>
+                    <span class="date">Publicado: Abril 20, 2026</span>
+                </header>
+                <h2 class="post-title">Iluminación en el mundo real</h2>
+                <p class="post-excerpt">En el mundo real, la luz es radiación electromagnética generada por fuentes como
+                    el sol, bombillas o fuego. Se propaga en línea recta como ondas o partículas llamadas fotones</p>
+
+                <!-- Contenido expandible -->
+                <div class="expandable-content" id="expand-iluminacion-real">
+
+                    <div class="section-block">
+                        <h3 class="section-subtitle">Interacción de la luz con los objetos</h3>
+                        <p>Cuando la luz encuentra un objeto, interactúa de tres formas principales:</p>
+                        <ul class="info-list">
+                            <li>
+                                <strong>Reflexión:</strong> La luz rebota en la superficie. En materiales lisos (como
+                                espejos), produce reflejos nítidos y brillantes. En superficies rugosas (como madera),
+                                se dispersa en muchas direcciones, creando una iluminación suave y mate.
+                            </li>
+                            <li>
+                                <strong>Refracción:</strong> La luz cambia de dirección al pasar a través de un material
+                                transparente, como agua o vidrio. Esto genera efectos como la distorsión visual o los
+                                colores del arcoíris.
+                            </li>
+                            <li>
+                                <strong>Absorción:</strong> Parte de la luz se convierte en calor y desaparece. Objetos
+                                oscuros absorben más, mientras que los claros reflejan más.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="section-block">
+                        <h3 class="section-subtitle">Cómo se adapta la iluminación real a OpenGL</h3>
+                        <p>OpenGL es una herramienta para renderizar gráficos 3D de forma eficiente en computadoras,
+                            ideal para aplicaciones interactivas como juegos. No replica la física completa de la luz,
+                            sino que usa una aproximación simplificada conocida como <strong>iluminación
+                                local</strong>. Solo considera la luz directa que va de la fuente al objeto, ignorando
+                            rebotes complejos entre superficies
+                        </p>
+                    </div>
+
+                    <p class="section-lead"><strong>Esto crea dos enfoques principales:</strong></p>
+
+                    <div class="comparison-grid">
+                        <div class="comparison-card">
+                            <h4>Iluminación Local</h4>
+                            <span class="comparison-tag local">OpenGL estándar</span>
+                            <p>Calcula solo la luz directa de la fuente al objeto, ignorando rebotes. Es rápida para
+                                renderizado interactivo, pero genera sombras definidas y menos realismo.</p>
+                        </div>
+                        <div class="comparison-card">
+                            <h4>Iluminación Global</h4>
+                            <span class="comparison-tag global">Ray Tracing</span>
+                            <p>Simula rebotes múltiples de luz entre superficies, creando sombras suaves y efectos
+                                indirectos realistas, pero computacionalmente más lento.</p>
+                        </div>
+                    </div>
+
+                    <div class="section-block">
+                        <h3 class="section-subtitle">El modelo de iluminación: Phong</h3>
+                        <p>OpenGL emplea el modelo de Phong, que divide la luz en tres componentes para calcular el
+                            color de cada superficie:</p>
+
+                        <div class="phong-components">
+                            <div class="phong-item ambient">
+                                <div class="phong-icon">☀</div>
+                                <h4>Luz Ambiental</h4>
+                                <p>Representa la luz general del entorno, como la que rebota en paredes o el cielo.
+                                    Ilumina todo de forma uniforme y evita áreas completamente negras.</p>
+                            </div>
+                            <div class="phong-item diffuse">
+                                <div class="phong-icon">🔆</div>
+                                <h4>Luz Difusa</h4>
+                                <p>Muestra los colores base del objeto. Depende del ángulo en que la luz golpea la
+                                    superficie: máxima cuando es perpendicular, decreciente hacia los lados y nula por
+                                    detrás.</p>
+                            </div>
+                            <div class="phong-item specular">
+                                <div class="phong-icon">✦</div>
+                                <h4>Luz Especular</h4>
+                                <p>Crea los brillos o reflejos destacados. Aparece solo desde ciertos ángulos de visión,
+                                    más intenso en materiales pulidos como metales o plásticos brillantes.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="example-box">
+                        <span class="example-label">Ejemplo práctico — Esfera iluminada</span>
+                        <p>En una esfera iluminada: la <strong>ambiental</strong> da una iluminación base que se
+                            mantiene constante, la <strong>difusa</strong> ilumina de manera uniforme según el ángulo de
+                            la superficie y la <strong>especular</strong> crea puntos de luz móviles que dependen de la
+                            posición de la cámara.</p>
+                    </div>
+
+                    <!-- ======= demostracion esfera iluminada ======= -->
+                    <div class="section-block">
+                        <h3 class="section-subtitle">Demostración interactiva - Esfera con iluminación</h3>
+                        <p>Arrastra para rotar la cámara. Usa los controles para activar/desactivar cada componente de
+                            iluminación y observar cómo cambia la esfera.</p>
+
+                        <div class="demo-container" id="demo-phong-container">
+                            <canvas id="canvas-phong"></canvas>
+                            <div class="demo-controls" id="controls-phong">
+                                <h4>Componentes de Phong</h4>
+                                <label class="demo-toggle">
+                                    <input type="checkbox" id="toggle-ambient" checked>
+                                    <span class="toggle-slider"></span>
+                                    Luz Ambiental
+                                </label>
+                                <label class="demo-toggle">
+                                    <input type="checkbox" id="toggle-diffuse" checked>
+                                    <span class="toggle-slider"></span>
+                                    Luz Difusa
+                                </label>
+                                <label class="demo-toggle">
+                                    <input type="checkbox" id="toggle-specular" checked>
+                                    <span class="toggle-slider"></span>
+                                    Luz Especular
+                                </label>
+                                <div class="demo-slider-group">
+                                    <label>Brillo: <span id="shininess-value">30</span></label>
+                                    <input type="range" id="slider-shininess" min="1" max="128" value="30">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="read-more" onclick="toggleExpand('expand-iluminacion-real', this)">Seguir leyendo →</div>
+            </article>
+
+            <!-- Ficha 2: Fuentes de iluminación -->
+            <article class="post-card" id="card-fuentes-luz">
+                <header class="post-header">
+                    <span class="category opengl">Creación de fuentes de luz</span>
+                    <span class="date">Publicado: Abril 20, 2026</span>
+                </header>
+                <h2 class="post-title">¿Qué son las fuentes de luz?</h2>
+                <p class="post-excerpt">Representan cosas del mundo real como el sol, una bombilla eléctrica, una vela o
+                    una linterna. Cada fuente emite luz que "golpea" las superficies de los objetos, creando efectos
+                    como brillos, sombras suaves o áreas iluminadas de forma diferente. Estas fuentes se colocan
+                    estratégicamente para dar vida y realismo a la escena, como en un videojuego o una
+                    animación.</p>
+
+                <!-- Contenido expandible -->
+                <div class="expandable-content" id="expand-fuentes-luz">
+                    <div class="section-block">
+                        <h3 class="section-subtitle">Tipos de luces (comportamiento)</h3>
+                        <p>Existen tres tipos básicos de fuentes de luz, cada uno inspirado en cómo funciona la luz en
+                            la vida cotidiana:</p>
+                    </div>
+
+                    <div class="light-types-grid">
+                        <div class="light-type-card directional">
+                            <div class="light-icon">☀️</div>
+                            <h4>Luz direccional</h4>
+                            <span class="light-example-tag">Ejemplo: El sol</span>
+                            <p>Este tipo imita una fuente lejana e infinita, como el sol en un día despejado. Los rayos
+                                de luz vienen todos en la misma dirección, paralelos entre sí, sin importar la distancia
+                                del objeto. Es ideal para escenas al aire libre durante el día, ya que ilumina todo de
+                                manera uniforme, creando sombras largas y rectas que apuntan en una sola dirección. No
+                                se debilita al alejarse, por lo que es perfecta para grandes paisajes donde todo debe
+                                verse bien iluminado desde lejos.</p>
+                        </div>
+                        <div class="light-type-card point">
+                            <div class="light-icon">💡</div>
+                            <h4>Luz puntual</h4>
+                            <span class="light-example-tag">Ejemplo: Bombilla</span>
+                            <p>Esta luz sale desde un punto fijo en el espacio y se expande en todas direcciones, como
+                                una esfera. La intensidad es más fuerte cerca de la fuente y se va debilitando a medida
+                                que te alejas, igual que en la realidad: cerca de la bombilla estás deslumbrado, pero en
+                                las esquinas de la habitación ya está más tenue. Crea un ambiente cálido en interiores,
+                                con áreas muy iluminadas en el centro y degradado hacia los bordes.</p>
+                        </div>
+                        <div class="light-type-card spotlight">
+                            <div class="light-icon">🔦</div>
+                            <h4>Reflector (Spotlight)</h4>
+                            <span class="light-example-tag">Ejemplo: Linterna, faro</span>
+                            <p>La luz sale desde un punto, pero solo en un haz cónico dirigido hacia adelante, como un
+                                cono de helado. Puedes controlar qué tan ancho es el cono (estrecho para un láser, más
+                                abierto para una linterna común) y qué tan suaves son los bordes del haz (duros o
+                                difuminados). Esto crea efectos dramáticos, como iluminar solo a un personaje en un
+                                escenario oscuro o simular el movimiento de un foco que sigue a alguien. Ejemplos como
+                                una linterna, un faro de coche o un foco de teatro.</p>
+                        </div>
+                    </div>
+
+                    <!-- ======= Demostracion tipos de luces ======= -->
+                    <div class="section-block">
+                        <h3 class="section-subtitle">Demostración interactiva — Tipos de fuentes de luz</h3>
+                        <p>Selecciona un tipo de luz para ver cómo ilumina la escena. Ajusta los parámetros con los
+                            controles.</p>
+
+                        <div class="demo-container" id="demo-lights-container">
+                            <canvas id="canvas-lights"></canvas>
+                            <div class="demo-controls" id="controls-lights">
+                                <h4>Tipo de luz</h4>
+                                <div class="demo-btn-group">
+                                    <button class="demo-btn active" data-light="directional" id="btn-directional">
+                                        Direccional</button>
+                                    <button class="demo-btn" data-light="point" id="btn-point">Puntual</button>
+                                    <button class="demo-btn" data-light="spot" id="btn-spot">Reflector</button>
+                                </div>
+
+                                <div class="demo-slider-group">
+                                    <label>Intensidad: <span id="intensity-value">1.0</span></label>
+                                    <input type="range" id="slider-intensity" min="0" max="3" step="0.1" value="1">
+                                </div>
+
+                                <div id="directional-note" class="directional-note"
+                                    style="display:none; background:rgba(255,200,60,0.1); border-left:3px solid #ffcc44; padding:6px 10px; margin:6px 0; border-radius:4px; font-size:0.78rem; color:#000000;">
+                                    <strong>Luz direccional:</strong> La intensidad es constante en toda la escena, sin
+                                    importar la posición de los objetos. Mover la posición solo cambia la
+                                    <em>dirección</em> de los rayos.
+                                </div>
+
+                                <!-- Controles de posición -->
+                                <div class="demo-slider-group">
+                                    <label>Posición X: <span id="pos-x-value">3</span></label>
+                                    <input type="range" id="slider-pos-x" min="-8" max="8" step="0.5" value="3">
+                                </div>
+                                <div class="demo-slider-group">
+                                    <label>Posición Y: <span id="pos-y-value">5</span></label>
+                                    <input type="range" id="slider-pos-y" min="0" max="10" step="0.5" value="5">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-block">
+                        <h3 class="section-subtitle">Implementación</h3>
+                        <!--CODIGO-->
+                        <pre
+                            class="code-snippet"><code id="code-light-source">// Selecciona un tipo de luz arriba para ver el código correspondiente</code></pre>
+                    </div>
+                </div>
+
+                <div class="read-more" onclick="toggleExpand('expand-fuentes-luz', this)">Seguir leyendo →</div>
+            </article>
+
+            <!-- Ficha 3: Manejo de colores (estructura vacía) -->
+            <article class="post-card" id="card-manejo-colores">
+                <header class="post-header">
+                    <span class="category colors">Manejo de colores</span>
+                    <span class="date">Publicado: Abril 20, 2026</span>
+                </header>
+                <h2 class="post-title">Manejo de colores y el espectro RGB</h2>
+                <p class="post-excerpt">¿Por qué multiplicamos los colores en los Shaders? Aprende cómo la luz blanca
+                    afecta a los objetos de colores y cómo representarlo con vectores...</p>
+                <div class="color-palette-preview">
+                    <div class="box red"></div>
+                    <div class="box green"></div>
+                    <div class="box blue"></div>
+                </div>
+
+                <!-- Contenido expandible (pendiente de información) -->
+                <div class="expandable-content" id="expand-colores">
+
+                    <div class="section-block">
+                        <h3 class="section-subtitle">Manejo de color en OpenGL</h3>
+                        <p class="placeholder-text">En OpenGL el color se gestiona mediante el modelo RGB aditivo,
+                            el cual se basa en dos conceptos fundamentales: la normalización y la multiplicación.</p>
+                    </div>
+
+                    <div class="section-block">
+                        <h3 class="section-subtitle">Normalización</h3>
+                        <p class="placeholder-text">Los valores de color se procesan internamente en un rango
+                            de 0 a 1. Un color en escala decimal (como 255, 128, 0) debe convertirse a (1.0, 0.5 0.0)
+                            para cálculos vectoriales.</p>
+                    </div>
+
+                    <div class="section-block">
+                        <h3 class="section-subtitle">Interacción por multiplicación</h3>
+                        <p class="placeholder-text">El color resultante de un objeto es el producto escalar de sus componentes:
+                            Color<sub>final</sub> = Color<sub>luz</sub> * Color<sub>material</sub></p>
+                        <p>En los shaders, multiplicar colores simula la forma en que las superficies físicas interactúan con la luz.
+                            El color de un objeto define qué porcentaje de la luz incidente es reflejada y qué parte es absorbida.</p>
+                        <p>Cuando multiplicamos un color de luz por un color de superficie, estamos realizando una operación componente a componente (conocida como producto de Hadamard). Donde los valores:</p>
+                            <p>- <strong>0.0</strong>: Absorción total (el material no refleja esa longitud de onda).</p>
+                            <p>- <strong>1.0</strong>: Reflexión total (el material refleja toda esa longitud de onda).</p>
+                    </div>
+
+                    <!-- Ejemplo interactivo Three.js: Producto Luz × Objeto -->
+                    <div class="example-box">
+                        <span class="example-label">Ejemplo práctico — Producto escalar Luz × Color del Objeto</span>
+                        <p>Cambia el color de la fuente de luz y el color base del objeto para ver en
+                            tiempo real cómo el producto componente a componente
+                            <strong>(R<sub>luz</sub>·R<sub>obj</sub>, G<sub>luz</sub>·G<sub>obj</sub>,
+                            B<sub>luz</sub>·B<sub>obj</sub>)</strong> determina el color final del cubo.</p>
+                    </div>
+
+                    <div class="section-block">
+                        <h3 class="section-subtitle">Demostración interactiva — Color resultante en 3D</h3>
+                        <p>Arrastra para rotar la cámara. Ajusta los sliders RGB de la luz y del objeto
+                            y observa cómo cambia el color del cubo.</p>
+
+                        <div class="demo-container" id="demo-color-container">
+                            <canvas id="canvas-color"></canvas>
+                            <div class="demo-controls" id="controls-color">
+                                <h4>Color de la Luz</h4>
+                                <div class="color-slider-group">
+                                    <label><span class="channel-label r-label">R:</span> <span id="light-r-val">1.00</span></label>
+                                    <input type="range" id="light-r" min="0" max="100" value="100" class="slider-r">
+                                </div>
+                                <div class="color-slider-group">
+                                    <label><span class="channel-label g-label">G:</span> <span id="light-g-val">1.00</span></label>
+                                    <input type="range" id="light-g" min="0" max="100" value="100" class="slider-g">
+                                </div>
+                                <div class="color-slider-group">
+                                    <label><span class="channel-label b-label">B:</span> <span id="light-b-val">1.00</span></label>
+                                    <input type="range" id="light-b" min="0" max="100" value="100" class="slider-b">
+                                </div>
+                                <div class="color-vec-display" id="light-vec">vec3(1.00, 1.00, 1.00)</div>
+
+                                <h4 style="margin-top:10px;">Color del Objeto</h4>
+                                <div class="color-slider-group">
+                                    <label><span class="channel-label r-label">R:</span> <span id="obj-r-val">1.00</span></label>
+                                    <input type="range" id="obj-r" min="0" max="100" value="100" class="slider-r">
+                                </div>
+                                <div class="color-slider-group">
+                                    <label><span class="channel-label g-label">G:</span> <span id="obj-g-val">0.50</span></label>
+                                    <input type="range" id="obj-g" min="0" max="100" value="50" class="slider-g">
+                                </div>
+                                <div class="color-slider-group">
+                                    <label><span class="channel-label b-label">B:</span> <span id="obj-b-val">0.31</span></label>
+                                    <input type="range" id="obj-b" min="0" max="100" value="31" class="slider-b">
+                                </div>
+                                <div class="color-vec-display" id="obj-vec">vec3(1.00, 0.50, 0.31)</div>
+
+                                <div class="color-result-panel">
+                                    <h4>Resultado</h4>
+                                    <div class="result-breakdown" id="result-breakdown">
+                                        <div class="breakdown-row">
+                                            <span class="channel-label r-label">R:</span>
+                                            <span class="breakdown-calc" id="calc-r">1.00 × 1.00 = <strong>1.00</strong></span>
+                                        </div>
+                                        <div class="breakdown-row">
+                                            <span class="channel-label g-label">G:</span>
+                                            <span class="breakdown-calc" id="calc-g">1.00 × 0.50 = <strong>0.50</strong></span>
+                                        </div>
+                                        <div class="breakdown-row">
+                                            <span class="channel-label b-label">B:</span>
+                                            <span class="breakdown-calc" id="calc-b">1.00 × 0.31 = <strong>0.31</strong></span>
+                                        </div>
+                                    </div>
+                                    <div class="color-vec-display result-vec" id="result-vec">vec3(1.00, 0.50, 0.31)</div>
+                                </div>
+
+                                <!-- Presets -->
+                                <div class="color-presets-vertical">
+                                    <span class="presets-label">Probar con:</span>
+                                    <button class="preset-btn" data-lr="100" data-lg="100" data-lb="100" data-or="100" data-og="0" data-ob="0">Luz blanca + Rojo</button>
+                                    <button class="preset-btn" data-lr="0" data-lg="100" data-lb="0" data-or="100" data-og="50" data-ob="31">Luz verde + Coral</button>
+                                    <button class="preset-btn" data-lr="100" data-lg="0" data-lb="0" data-or="0" data-og="0" data-ob="100">Luz roja + Azul</button>
+                                    <button class="preset-btn" data-lr="100" data-lg="80" data-lb="20" data-or="80" data-og="30" data-ob="60">Luz cálida + Púrpura</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="read-more" onclick="toggleExpand('expand-colores', this)">Seguir leyendo →</div>
+            </article>
+
+        </main>
+
+        <aside class="blog-sidebar">
+            <div class="sidebar-widget">
+                <h3>Sobre este Blog</h3>
+                <p>Un espacio dedicado a documentar el aprendizaje de los alumnos de la materia de Computación Gráfica.
+                </p>
+            </div>
+
+            <div class="sidebar-widget">
+                <h3>Categorías</h3>
+                <ul class="cat-list">
+                    <li><span class="dot t"></span> Teoría <span>(12)</span></li>
+                    <li><span class="dot c"></span> Shaders <span>(08)</span></li>
+                    <li><span class="dot o"></span> Algoritmos <span>(15)</span></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-widget newsletter">
+                <h3>Enterate de lo nuevo</h3>
+                <p>Recibe los apuntes de la semana y novedades.</p>
+                <input type="email" placeholder="tu@email.com">
+                <button>Unirme</button>
+            </div>
+        </aside>
+
+    </div>
+
+    <footer class="blog-footer">
+        <p>DevLog © 2026 | Apuntes de Ingeniería Informática</p>
+        <p>Realizado por Alvarado Juan, Goncalves Valentina y Mendez Isabella</p>
+    </footer>
+
+    <!-- Three.js desde CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- OrbitControls -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+    <!-- Scripts del proyecto -->
+    <script src="js/main.js"></script>
+    <script src="js/iluminacion.js"></script>
+    <script src="js/fuente-de-luz.js"></script>
+    <script src="js/color.js"></script>
+
+</body>
+
+</html>
